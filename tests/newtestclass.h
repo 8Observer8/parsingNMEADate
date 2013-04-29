@@ -13,7 +13,11 @@
 class newtestclass : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST_SUITE(newtestclass);
 
-    CPPUNIT_TEST(testParseData_normalTest);
+    CPPUNIT_TEST(testParseData_GGAIsFix_RMCIsFix);
+    CPPUNIT_TEST(testParseData_GGAIsNotFix_RMCIsFix);
+    CPPUNIT_TEST(testParseData_GGAIsFix_RMCIsNotFix);
+    CPPUNIT_TEST(testParseData_GGAIsNotFix_RMCIsNotFix);
+
     CPPUNIT_TEST(testParseData_latitude);
     CPPUNIT_TEST(testParseData_longitude);
     CPPUNIT_TEST(testParseData_altitude);
@@ -30,7 +34,11 @@ public:
     void tearDown();
 
 private:
-    void testParseData_normalTest();
+    void testParseData_GGAIsFix_RMCIsFix();
+    void testParseData_GGAIsNotFix_RMCIsFix();
+    void testParseData_GGAIsFix_RMCIsNotFix();
+    void testParseData_GGAIsNotFix_RMCIsNotFix();
+
     void testParseData_latitude();
     void testParseData_strLatitude();
     void testParseData_longitude();

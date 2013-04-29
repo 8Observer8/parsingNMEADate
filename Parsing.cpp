@@ -25,8 +25,6 @@ Parsing::Parsing() {
 // e +
 // w -
 
-
-
 vector <string> & Parsing::split(
         vector <string> & result,
         const string& s,
@@ -48,6 +46,31 @@ vector <string> & Parsing::split(
     return result;
 }
 
+void print(const vector<string>& s) {
+    for (unsigned int i = 0; i < s.size(); i++) {
+        if (s[i] == "") {
+            cout << "\"\"" << endl;
+        } else {
+            cout << s[i] << endl;
+        }
+    }
+}
+
+#include <fstream>
+
+void printInFile(const vector<string>& s) {
+    ofstream myfile;
+    myfile.open("testOutputFile.txt");
+    for (unsigned int i = 0; i < s.size(); i++) {
+        if (s[i] == "") {
+            myfile << "\"\"" << endl;
+        } else {
+            myfile << s[i] << endl;
+        }
+    }
+    myfile.close();
+}
+
 bool Parsing::parseData(std::string s) {
     if (s.empty()) {
         setValuesInZero();
@@ -58,8 +81,6 @@ bool Parsing::parseData(std::string s) {
     vector<string>::iterator itGPGGA;
     vector<string> strGPGGA;
 
-    split(fields, s, ",");
-    
     // Raplace '\n' to ','
     for (unsigned int i = 0; i < s.size(); ++i) {
         if (s[i] == '\n') {
@@ -67,19 +88,24 @@ bool Parsing::parseData(std::string s) {
         }
     }
 
+    split(fields, s, ",");
+
     // Take GGA data in array
     itGPGGA = find(fields.begin(), fields.end(), "$GPGGA");
     if (itGPGGA != fields.end()) {
         for (unsigned int i = 0; i < 15; ++i) {
+            if (fields.size() <= (i+1)) {
+                setValuesInZero();
+                return false;
+            }
             strGPGGA.push_back(*itGPGGA);
             ++itGPGGA;
         }
-    }
-    else {
+    } else {
         setValuesInZero();
         return false;
     }
-    
+
     // 6) GPS Quality Indicator,
     // 0 - fix not available,
     // 1 - GPS fix,
@@ -87,8 +113,7 @@ bool Parsing::parseData(std::string s) {
     if (strGPGGA[6] != "2") {
         setValuesInZero();
         return false;
-    }
-    else {
+    } else {
         m_isFixGPGGA = true;
     }
 
@@ -112,21 +137,25 @@ bool Parsing::parseData(std::string s) {
     itGPRMC = find(fields.begin(), fields.end(), "$GPRMC");
     if (itGPRMC != fields.end()) {
         for (unsigned int i = 0; i < 12; ++i) {
+            if (fields.size() <= (i+1)) {
+                setValuesInZero();
+                return false;
+            }
             strGPRMC.push_back(*itGPRMC);
             ++itGPRMC;
         }
-    }
-    else {
+    } else {
         setValuesInZero();
         return false;
     }
+//    print(fields);
+//    printInFile(fields);
 
     // 2) Status, V = Navigation receiver warning
     if (strGPRMC[2] != "A") {
         setValuesInZero();
         return false;
-    }
-    else {
+    } else {
         m_isFixGPRMC = true;
     }
 
@@ -136,14 +165,14 @@ bool Parsing::parseData(std::string s) {
         setValuesInZero();
         return false;
     }
-    
+
     // 3) Latitude
     stringstream convertLatitude(strGPRMC[3]);
     if (!(convertLatitude >> m_dLatitude)) {
         setValuesInZero();
         return false;
     }
-    
+
     // 5) Longitude
     stringstream convertLongitude(strGPRMC[5]);
     if (!(convertLongitude >> m_dLongitude)) {
@@ -157,6 +186,8 @@ bool Parsing::parseData(std::string s) {
         setValuesInZero();
         return false;
     }
+    
+    return true;
 }
 
 double Parsing::getLatitude() {
@@ -184,11 +215,11 @@ int Parsing::getNSatellites() {
 }
 
 bool Parsing::isFixGPGGA() {
-    return isFixGPGGA;
+    return m_isFixGPGGA;
 }
 
 bool Parsing::isFixGPRMC() {
-    return isFixGPRMC;
+    return m_isFixGPRMC;
 }
 
 void Parsing::setValuesInZero() {

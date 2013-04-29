@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=MinGW-Windows
 CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW-Windows
-CND_ARTIFACT_NAME_Debug=parsedata
-CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW-Windows/parsedata
+CND_ARTIFACT_NAME_Debug=parsingnmeadate
+CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW-Windows/parsingnmeadate
 CND_PACKAGE_DIR_Debug=dist/Debug/MinGW-Windows/package
-CND_PACKAGE_NAME_Debug=parsedata.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW-Windows/package/parsedata.tar
+CND_PACKAGE_NAME_Debug=parsingnmeadate.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/MinGW-Windows/package/parsingnmeadate.tar
 # Release configuration
 CND_PLATFORM_Release=MinGW-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/MinGW-Windows
-CND_ARTIFACT_NAME_Release=parsedata
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/parsedata
+CND_ARTIFACT_NAME_Release=parsingnmeadate
+CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/parsingnmeadate
 CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
-CND_PACKAGE_NAME_Release=parsedata.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/parsedata.tar
+CND_PACKAGE_NAME_Release=parsingnmeadate.tar
+CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/parsingnmeadate.tar
 #
 # include compiler specific variables
 #
