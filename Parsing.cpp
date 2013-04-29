@@ -98,9 +98,6 @@ bool Parsing::parseData(std::string s) {
         setValuesInZero();
         return false;
     }
-    else {
-        m_isFixGPRMC = true;
-    }
 
     // 9) Antenna Altitude above/below mean-sea-level (geoid)
     stringstream convertAltitude(strGPGGA[9]);
@@ -128,6 +125,9 @@ bool Parsing::parseData(std::string s) {
     if (strGPRMC[2] != "A") {
         setValuesInZero();
         return false;
+    }
+    else {
+        m_isFixGPRMC = true;
     }
 
     // 1) Time (UTC)
