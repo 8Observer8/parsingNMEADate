@@ -144,14 +144,14 @@ private:
     int m_nSatellites;
     
     /**
-     * The GPGGA is fix or not
+     * The GPGGA is fixed or not
      */
-    bool isFixGPGGA;
+    bool m_isFixGPGGA;
 
     /**
-     * The GPRMC is fix or not
+     * The GPRMC is fixed or not
      */
-    bool isFixGPRMC;
+    bool m_isFixGPRMC;
 };
 
 #endif	/* PARSING_H */

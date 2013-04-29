@@ -15,12 +15,7 @@
 using namespace std;
 
 Parsing::Parsing() {
-    m_dLatitude = 0;
-    m_dLongitude = 0;
-    m_dAltitude = 0;
-    m_time = 0;
-    m_dSpeed = 0;
-    m_nSatellites = 0;
+    setValuesInZero();
 }
 
 
@@ -89,9 +84,12 @@ bool Parsing::parseData(std::string s) {
     // 0 - fix not available,
     // 1 - GPS fix,
     // 2 - Differential GPS fix
-    if (strGPGGA[6] == "0") {
+    if (strGPGGA[6] != "2") {
         setValuesInZero();
         return false;
+    }
+    else {
+        m_isFixGPGGA = true;
     }
 
     // 7) Number of satellites in view, 00 - 12
@@ -99,6 +97,9 @@ bool Parsing::parseData(std::string s) {
     if (!(convertNSatellites >> m_nSatellites)) {
         setValuesInZero();
         return false;
+    }
+    else {
+        m_isFixGPRMC = true;
     }
 
     // 9) Antenna Altitude above/below mean-sea-level (geoid)
@@ -108,7 +109,7 @@ bool Parsing::parseData(std::string s) {
         return false;
     }
 
-    // $GPRMC
+    // Take the GPRMC packet
     vector<string>::iterator itGPRMC;
     vector<string> strGPRMC;
     itGPRMC = find(fields.begin(), fields.end(), "$GPRMC");
@@ -124,7 +125,7 @@ bool Parsing::parseData(std::string s) {
     }
 
     // 2) Status, V = Navigation receiver warning
-    if (strGPRMC[2] == "V") {
+    if (strGPRMC[2] != "A") {
         setValuesInZero();
         return false;
     }
@@ -182,6 +183,14 @@ int Parsing::getNSatellites() {
     return m_nSatellites;
 }
 
+bool Parsing::isFixGPGGA() {
+    return isFixGPGGA;
+}
+
+bool Parsing::isFixGPRMC() {
+    return isFixGPRMC;
+}
+
 void Parsing::setValuesInZero() {
     m_dLatitude = 0;
     m_dLongitude = 0;
@@ -189,4 +198,6 @@ void Parsing::setValuesInZero() {
     m_time = 0;
     m_dSpeed = 0;
     m_nSatellites = 0;
+    m_isFixGPGGA = false;
+    m_isFixGPRMC = false;
 }
