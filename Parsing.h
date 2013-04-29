@@ -40,6 +40,8 @@ public:
     int getTime();
     double getSpeed();
     int getNSatellites();
+    bool isFixGPGGA();
+    bool isFixGPRMC();
 
 private:
     void setValuesInZero();
@@ -52,4 +54,3 @@ private:
 };
 
 #endif	/* PARSING_H */
-
