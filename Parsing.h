@@ -142,6 +142,16 @@ private:
      * The number of the satellites
      */
     int m_nSatellites;
+    
+    /**
+     * The GPGGA is fix or not
+     */
+    bool isFixGPGGA;
+
+    /**
+     * The GPRMC is fix or not
+     */
+    bool isFixGPRMC;
 };
 
 #endif	/* PARSING_H */
