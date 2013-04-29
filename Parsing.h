@@ -18,15 +18,14 @@ struct split {
     };
 };
 
+/**
+ * The parsing data from the NMEA protocol
+ */
 class Parsing {
 public:
     Parsing();
 
     bool parseData(std::string buffer);
-    //bool IsValid();
-//    enum empties_t {
-//        empties_ok, no_empties
-//    };
     
     vector <string> & split(
             vector <string> & result,
