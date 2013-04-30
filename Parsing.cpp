@@ -94,12 +94,14 @@ bool Parsing::parseData(std::string s) {
     itGPGGA = find(fields.begin(), fields.end(), "$GPGGA");
     if (itGPGGA != fields.end()) {
         for (unsigned int i = 0; i < 15; ++i) {
-            if (fields.size() <= (i+1)) {
+            if (itGPGGA != fields.end()) {
+                strGPGGA.push_back(*itGPGGA);
+                ++itGPGGA;
+            }
+            else {
                 setValuesInZero();
                 return false;
             }
-            strGPGGA.push_back(*itGPGGA);
-            ++itGPGGA;
         }
     } else {
         setValuesInZero();
@@ -137,19 +139,20 @@ bool Parsing::parseData(std::string s) {
     itGPRMC = find(fields.begin(), fields.end(), "$GPRMC");
     if (itGPRMC != fields.end()) {
         for (unsigned int i = 0; i < 12; ++i) {
-            if (fields.size() <= (i+1)) {
+            if (itGPRMC != fields.end()) {
+                strGPRMC.push_back(*itGPRMC);
+                ++itGPRMC;
+            } else {
                 setValuesInZero();
                 return false;
             }
-            strGPRMC.push_back(*itGPRMC);
-            ++itGPRMC;
         }
     } else {
         setValuesInZero();
         return false;
     }
-//    print(fields);
-//    printInFile(fields);
+    //    print(fields);
+    //    printInFile(fields);
 
     // 2) Status, V = Navigation receiver warning
     if (strGPRMC[2] != "A") {
@@ -186,7 +189,7 @@ bool Parsing::parseData(std::string s) {
         setValuesInZero();
         return false;
     }
-    
+
     return true;
 }
 
