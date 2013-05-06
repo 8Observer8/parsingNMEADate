@@ -18,8 +18,10 @@ class newtestclass : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST(testParseData_GGAIsFix_RMCIsNotFix);
     CPPUNIT_TEST(testParseData_GGAIsNotFix_RMCIsNotFix);
 
-    CPPUNIT_TEST(testParseData_latitude);
-    CPPUNIT_TEST(testParseData_longitude);
+    CPPUNIT_TEST(testParseData_northernLatitude);
+    CPPUNIT_TEST(testParseData_southernLatitude);
+    CPPUNIT_TEST(testParseData_easternLongitude);
+    CPPUNIT_TEST(testParseData_westernLongitude);
     CPPUNIT_TEST(testParseData_altitude);
     CPPUNIT_TEST(testParseData_time);
     CPPUNIT_TEST(testParseData_speed);
@@ -39,9 +41,11 @@ private:
     void testParseData_GGAIsFix_RMCIsNotFix();
     void testParseData_GGAIsNotFix_RMCIsNotFix();
 
-    void testParseData_latitude();
-    void testParseData_strLatitude();
-    void testParseData_longitude();
+    void testParseData_northernLatitude();
+    void testParseData_southernLatitude();
+    void testParseData_easternLongitude();
+    void testParseData_westernLongitude();
+
     void testParseData_altitude();
     void testParseData_time();
     void testParseData_speed();

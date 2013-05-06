@@ -175,12 +175,22 @@ bool Parsing::parseData(std::string s) {
         setValuesInZero();
         return false;
     }
+    
+    // 4) N or S
+    if (strGPRMC[4] == "S") {
+        m_dLatitude *= -1;
+    }
 
     // 5) Longitude
     stringstream convertLongitude(strGPRMC[5]);
     if (!(convertLongitude >> m_dLongitude)) {
         setValuesInZero();
         return false;
+    }
+
+    // 6) E or W
+    if (strGPRMC[6] == "W") {
+        m_dLongitude *= -1;
     }
 
     // 7) Speed over ground, knots
