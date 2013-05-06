@@ -166,9 +166,9 @@ void newtestclass::testParseData_northernLatitude() {
     Parsing p;
     bool isParsed = p.parseData(str);
 
-    double expected = 5542.2389;
+    double expected = 55.70398; // 5542.2389
     double actual = p.getLatitude();
-    double delta = 0.001;
+    double delta = 0.00001;
     
     bool isEqual = (std::abs(expected-actual) <= delta);
 
@@ -195,7 +195,7 @@ void newtestclass::testParseData_southernLatitude() {
     Parsing p;
     bool isParsed = p.parseData(str);
 
-    double expected = -5542.2389;
+    double expected = -55.2389;
     double actual = p.getLatitude();
     double delta = 0.001;
     
@@ -222,9 +222,9 @@ void newtestclass::testParseData_easternLongitude() {
     Parsing p;
     bool isParsed = p.parseData(str);
 
-    int expected = 3741.6063;
+    int expected = 37.693438; // 3741.6063
     int actual = p.getLongitude();
-    double delta = 0.0001;
+    double delta = 0.00001;
 
     bool isEqual = (std::abs(expected-actual) <= delta);
 
@@ -337,4 +337,66 @@ void newtestclass::testParseData_speed() {
     bool isEqual = (std::abs(expected-actual) <= delta);
 
     CPPUNIT_ASSERT(isEqual && isParsed);
+}
+
+void newtestclass::testMinutesToDegrees_5532_82() {
+    double actual;
+    double expected = 55.547;
+    double delta = 0.001;
+    double inputVal = 5532.82;
+
+    Parsing p;
+    bool isOk = p.minutesToDegrees(inputVal, actual);
+
+    bool isEqual = (std::abs(expected-actual) <= delta);
+
+    CPPUNIT_ASSERT(isEqual && isOk);
+}
+
+void newtestclass::testMinutesToDegrees_5542_2389() {
+    double actual;
+    double expected = 55.70398;
+    double delta = 0.00001;
+    double inputVal = 5542.2389;
+
+    Parsing p;
+    bool isOk = p.minutesToDegrees(inputVal, actual);
+
+    bool isEqual = (std::abs(expected-actual) <= delta);
+
+    CPPUNIT_ASSERT(isEqual && isOk);
+}
+
+void newtestclass::testMinutesToDegrees_03741_6063() {
+    double actual;
+    double expected = 37.693438;
+    double delta = 0.00001;
+    double inputVal = 03741.6063;
+
+    Parsing p;
+    bool isOk = p.minutesToDegrees(inputVal, actual);
+
+    bool isEqual = (std::abs(expected-actual) <= delta);
+
+    CPPUNIT_ASSERT(isEqual && isOk);
+}
+
+void newtestclass::testMinutesToDegrees_notEqual_03741_606() {
+    double actual;
+    double inputVal = 03741.606;
+
+    Parsing p;
+    bool isOk = p.minutesToDegrees(inputVal, actual);
+
+    CPPUNIT_ASSERT(!isOk);
+}
+
+void newtestclass::testMinutesToDegrees_notEqual_0374_16063() {
+    double actual;
+    double inputVal = 0374.16063;
+
+    Parsing p;
+    bool isOk = p.minutesToDegrees(inputVal, actual);
+
+    CPPUNIT_ASSERT(!isOk);
 }

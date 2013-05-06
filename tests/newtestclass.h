@@ -27,6 +27,13 @@ class newtestclass : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST(testParseData_speed);
     CPPUNIT_TEST(testParseData_satellites);
 
+    CPPUNIT_TEST(testMinutesToDegrees_5532_82);
+    CPPUNIT_TEST(testMinutesToDegrees_5542_2389);
+    CPPUNIT_TEST(testMinutesToDegrees_03741_6063);
+
+    CPPUNIT_TEST(testMinutesToDegrees_notEqual_03741_606);
+    CPPUNIT_TEST(testMinutesToDegrees_notEqual_0374_16063);
+
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -50,6 +57,13 @@ private:
     void testParseData_time();
     void testParseData_speed();
     void testParseData_satellites();
+
+    void testMinutesToDegrees_5532_82();
+    void testMinutesToDegrees_5542_2389();
+    void testMinutesToDegrees_03741_6063();
+
+    void testMinutesToDegrees_notEqual_03741_606();
+    void testMinutesToDegrees_notEqual_0374_16063();
 };
 
 #endif	/* NEWTESTCLASS_H */

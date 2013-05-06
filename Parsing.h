@@ -106,6 +106,14 @@ public:
      * @return The GPRMC is fix or not
      */
     bool isFixGPRMC();
+    
+    /**
+     * Converts a minute record to a degree record
+     * 
+     * @param m The minute record
+     * @return The degree record
+     */
+    bool minutesToDegrees(double m, double& result);
 
 private:
     /**

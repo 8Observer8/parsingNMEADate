@@ -97,8 +97,7 @@ bool Parsing::parseData(std::string s) {
             if (itGPGGA != fields.end()) {
                 strGPGGA.push_back(*itGPGGA);
                 ++itGPGGA;
-            }
-            else {
+            } else {
                 setValuesInZero();
                 return false;
             }
@@ -170,20 +169,30 @@ bool Parsing::parseData(std::string s) {
     }
 
     // 3) Latitude
+    double latitudeDegreeWithMinutes;
     stringstream convertLatitude(strGPRMC[3]);
-    if (!(convertLatitude >> m_dLatitude)) {
+    if (!(convertLatitude >> latitudeDegreeWithMinutes)) {
         setValuesInZero();
         return false;
     }
-    
+    if (!minutesToDegrees(latitudeDegreeWithMinutes, m_dLatitude)) {
+        setValuesInZero();
+        return false;
+    }
+
     // 4) N or S
     if (strGPRMC[4] == "S") {
         m_dLatitude *= -1;
     }
 
     // 5) Longitude
+    double longitudeDegreeWithMinutes;
     stringstream convertLongitude(strGPRMC[5]);
-    if (!(convertLongitude >> m_dLongitude)) {
+    if (!(convertLongitude >> longitudeDegreeWithMinutes)) {
+        setValuesInZero();
+        return false;
+    }
+    if (!minutesToDegrees(longitudeDegreeWithMinutes, m_dLongitude)) {
         setValuesInZero();
         return false;
     }
@@ -245,4 +254,39 @@ void Parsing::setValuesInZero() {
     m_nSatellites = 0;
     m_isFixGPGGA = false;
     m_isFixGPRMC = false;
+}
+
+bool Parsing::minutesToDegrees(double dDegreeWithMinutes, double& degree) {
+    // Conversion from double to string
+    stringstream qDegreeWithMinutesToString;
+    qDegreeWithMinutesToString << dDegreeWithMinutes;
+    string qDegreeWithMinutesAsString(qDegreeWithMinutesToString.str());
+
+    if ((qDegreeWithMinutesAsString.length() != 9) || (qDegreeWithMinutesAsString[4] != '.')) {
+        return false;
+    }
+
+    string degreesAsString = qDegreeWithMinutesAsString.substr(0, 2);
+    string minutesAsString = qDegreeWithMinutesAsString.substr(2, 7);
+
+    double minutes;
+    stringstream qMinutesToString(minutesAsString);
+    if (!(qMinutesToString >> minutes)) {
+        return false;
+    }
+    double tenthsOfDegree = minutes / 60;
+
+    // Conversion from double to string
+    stringstream qTenthsOfDegreeToString;
+    qTenthsOfDegreeToString << tenthsOfDegree;
+    string qTenthsOfDegreeAsString(qTenthsOfDegreeToString.str());
+
+    degreesAsString += qTenthsOfDegreeAsString;
+
+    stringstream convertDegrees(degreesAsString);
+    if (!(convertDegrees >> degree)) {
+        return false;
+    }
+
+    return true;
 }
