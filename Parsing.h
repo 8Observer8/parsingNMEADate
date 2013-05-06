@@ -7,6 +7,7 @@
 
 #ifndef PARSING_H
 #define	PARSING_H
+
 #include <string>
 #include <vector>
 using namespace std;

@@ -274,9 +274,9 @@ void newtestclass::testParseData_speed() {
     Parsing p;
     bool isParsed = p.parseData(str);
 
-    double expected = 0.06;
+    double expected = 0.06 * 1.852;
     double actual = p.getSpeed();
-    double delta = 0.1;
+    double delta = 0.00001;
 
     bool isEqual = (std::abs(expected-actual) <= delta);
 

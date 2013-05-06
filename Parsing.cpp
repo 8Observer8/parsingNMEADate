@@ -189,6 +189,7 @@ bool Parsing::parseData(std::string s) {
         setValuesInZero();
         return false;
     }
+    m_dSpeed *= 1.852;
 
     return true;
 }
