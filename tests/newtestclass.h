@@ -31,7 +31,6 @@ class newtestclass : public CPPUNIT_NS::TestFixture {
     CPPUNIT_TEST(testMinutesToDegrees_5542_2389);
     CPPUNIT_TEST(testMinutesToDegrees_03741_6063);
 
-    CPPUNIT_TEST(testMinutesToDegrees_notEqual_03741_606);
     CPPUNIT_TEST(testMinutesToDegrees_notEqual_0374_16063);
 
     CPPUNIT_TEST_SUITE_END();
@@ -62,7 +61,6 @@ private:
     void testMinutesToDegrees_5542_2389();
     void testMinutesToDegrees_03741_6063();
 
-    void testMinutesToDegrees_notEqual_03741_606();
     void testMinutesToDegrees_notEqual_0374_16063();
 };
 

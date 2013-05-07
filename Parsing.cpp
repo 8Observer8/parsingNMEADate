@@ -256,18 +256,18 @@ void Parsing::setValuesInZero() {
     m_isFixGPRMC = false;
 }
 
-bool Parsing::minutesToDegrees(double dDegreeWithMinutes, double& degree) {
+bool Parsing::minutesToDegrees(double dDegreeWithMinutes, double& degrees) {
     // Conversion from double to string
     stringstream qDegreeWithMinutesToString;
     qDegreeWithMinutesToString << dDegreeWithMinutes;
     string qDegreeWithMinutesAsString(qDegreeWithMinutesToString.str());
 
-    if ((qDegreeWithMinutesAsString.length() != 9) || (qDegreeWithMinutesAsString[4] != '.')) {
+    if (qDegreeWithMinutesAsString[4] != '.') {
         return false;
     }
 
     string degreesAsString = qDegreeWithMinutesAsString.substr(0, 2);
-    string minutesAsString = qDegreeWithMinutesAsString.substr(2, 7);
+    string minutesAsString = qDegreeWithMinutesAsString.substr(2, qDegreeWithMinutesAsString.length() - 2);
 
     double minutes;
     stringstream qMinutesToString(minutesAsString);
@@ -275,18 +275,13 @@ bool Parsing::minutesToDegrees(double dDegreeWithMinutes, double& degree) {
         return false;
     }
     double tenthsOfDegree = minutes / 60;
-
-    // Conversion from double to string
-    stringstream qTenthsOfDegreeToString;
-    qTenthsOfDegreeToString << tenthsOfDegree;
-    string qTenthsOfDegreeAsString(qTenthsOfDegreeToString.str());
-
-    degreesAsString += qTenthsOfDegreeAsString;
-
-    stringstream convertDegrees(degreesAsString);
-    if (!(convertDegrees >> degree)) {
+    
+    stringstream qDegreesToString(degreesAsString);
+    if (!(qDegreesToString >> degrees)) {
         return false;
     }
+
+    degrees += tenthsOfDegree;
 
     return true;
 }
