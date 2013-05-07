@@ -114,6 +114,14 @@ public:
      * @return The degree record
      */
     bool minutesToDegrees(double m, double& result);
+    
+    /**
+     * Convert utc Time to Unix Time
+     * 
+     * @param utcTime The UTC time
+     * @return The unix time
+     */
+    unsigned int utcToUnixTime(double utcTime, double utcData);
 
 private:
     /**

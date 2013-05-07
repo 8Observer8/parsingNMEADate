@@ -390,3 +390,26 @@ void newtestclass::testMinutesToDegrees_notEqual_0374_16063() {
 
     CPPUNIT_ASSERT(!isOk);
 }
+
+//void newtestclass::testUtcToUnixTime_125504() {
+//    double expected = 1158756904;
+//    double utcTime = 125504.049;
+//    double utcData = 200906;
+//
+//    Parsing p;
+//    double actual = p.utcToUnixTime(utcTime, utcData);
+//
+//    CPPUNIT_ASSERT_EQUAL(expected, actual);
+//}
+
+
+void newtestclass::testUtcToUnixTime_065504() {
+    double expected = 1348124104;
+    double utcTime = 065504.049;
+    double utcData = 200912;
+
+    Parsing p;
+    double actual = p.utcToUnixTime(utcTime, utcData);
+
+    CPPUNIT_ASSERT_EQUAL(expected, actual);
+}
