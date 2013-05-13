@@ -121,7 +121,7 @@ public:
      * @param utcTime The UTC time
      * @return The unix time
      */
-    unsigned int utcToUnixTime(double utcTime, double utcData);
+    unsigned int utcToUnixTime(double utcTime, int utcData);
 
 private:
     /**

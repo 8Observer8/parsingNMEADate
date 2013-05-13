@@ -406,10 +406,13 @@ void newtestclass::testMinutesToDegrees_notEqual_0374_16063() {
 void newtestclass::testUtcToUnixTime_065504() {
     double expected = 1348124104;
     double utcTime = 065504.049;
-    double utcData = 200912;
+    int utcData = 200912;
 
     Parsing p;
     double actual = p.utcToUnixTime(utcTime, utcData);
+    double delta = expected/1000;
+    
+    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
 
-    CPPUNIT_ASSERT_EQUAL(expected, actual);
+    CPPUNIT_ASSERT(isEqual);
 }

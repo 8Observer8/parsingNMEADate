@@ -294,24 +294,24 @@ unsigned int Parsing::utcToUnixTime(double dUtcTime, int utcData) {
     qUtcTimeToString << iUtcTime;
     string qUtcTimeAsString(qUtcTimeToString.str());
     
-    int hourAsString = qUtcTimeAsString(0, 2);
-    int minuteAsString = qUtcTimeAsString(2, 2);
-    int secondAsString = qUtcTimeAsString(4, 2);
-    
-    // Conversion from double to string
-    stringstream qUtcDataToString;
-    qUtcDataToString << utcData;
-    string qUtcDataAsString(qUtcDataToString.str());
-    
-    int dayAsString = qUtcDataAsString(0, 2);
-    int monthAsString = qUtcDataAsString(2, 2);
-    int yearAsString = qUtcDataAsString(4, 2);
-
-    struct tm beginningOfUnix;
-    beginningOfUnix.tm_hour = 0;
-    beginningOfUnix.tm_min = 0;
-    beginningOfUnix.tm_sec = 0;
-    beginningOfUnix.tm_mon = 0;
-    beginningOfUnix.tm_mday = 1;
+//    int hourAsString = qUtcTimeAsString(0, 2);
+//    int minuteAsString = qUtcTimeAsString(2, 2);
+//    int secondAsString = qUtcTimeAsString(4, 2);
+//    
+//    // Conversion from double to string
+//    stringstream qUtcDataToString;
+//    qUtcDataToString << utcData;
+//    string qUtcDataAsString(qUtcDataToString.str());
+//    
+//    int dayAsString = qUtcDataAsString(0, 2);
+//    int monthAsString = qUtcDataAsString(2, 2);
+//    int yearAsString = qUtcDataAsString(4, 2);
+//
+//    struct tm beginningOfUnix;
+//    beginningOfUnix.tm_hour = 0;
+//    beginningOfUnix.tm_min = 0;
+//    beginningOfUnix.tm_sec = 0;
+//    beginningOfUnix.tm_mon = 0;
+//    beginningOfUnix.tm_mday = 1;
     return 0;
 }
