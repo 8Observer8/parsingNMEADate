@@ -128,6 +128,20 @@ private:
      * Sets the values in zero
      */
     void setValuesInZero();
+
+    /**
+     * Check "is the buffer valid?"
+     * @param s The input string
+     * @return Where or not the buffer is valid
+     */
+    bool isTheBufferValid(std::string& s);
+
+    /**
+     * Check "is the buffer completed?"
+     * @param s The input string
+     * @return Where or not the buffer is completed
+     */
+    bool isTheBufferComleted(std::string& s);
     
     /**
      * The latitude

@@ -78,19 +78,33 @@ bool Parsing::parseData(std::string s) {
         return false;
     }
 
+    static std::string staticBuffer;
+    std::string buffer = "";
+
+    staticBuffer += s;
+
+    if (staticBuffer.length() < 1000) {
+        setValuesInZero();
+        return false;
+    }
+    else {
+        buffer = staticBuffer;
+        staticBuffer = "";
+    }
+
     vector<string> fields;
     vector<string>::iterator itGPGGA;
     vector<string> strGPGGA;
 
     // Raplace '\n' to ','
-    for (unsigned int i = 0; i < s.size(); ++i) {
-        if (s[i] == '\n') {
-            s[i] = ',';
+    for (unsigned int i = 0; i < buffer.size(); ++i) {
+        if (buffer[i] == '\n') {
+            buffer[i] = ',';
         }
     }
 
-    split(fields, s, ",");
-
+    split(fields, buffer, ",");
+    
     // Take GGA data in array
     itGPGGA = find(fields.begin(), fields.end(), "$GPGGA");
     if (itGPGGA != fields.end()) {
@@ -211,6 +225,7 @@ bool Parsing::parseData(std::string s) {
     }
     m_dSpeed *= 1.852;
 
+    staticBuffer = "";
     return true;
 }
 

@@ -9,6 +9,7 @@
 #include "../Parsing.h"
 #include <cmath>
 #include <string>
+#include <vector>
 
 CPPUNIT_TEST_SUITE_REGISTRATION(newtestclass);
 
@@ -63,7 +64,9 @@ void newtestclass::testParseData_GGAIsNotFix_RMCIsFix() {
     // 5) Longitude
     // 7) Speed over ground, knots
 
-    std::string str = "$GPGGA,072143.923,,,,,0,03,,9.5,M,0.0,M,,0000*5D\r\n$GPRMC,125504.049,A,5542.2389,N,03741.6063,E,0.06,25.82,200906,,,*17";
+    std::string str = "$GPGGA,072143.923,,,,,0,03,,9.5,M,0.0,M,,0000*5D\r\n"
+                      "$GPRMC,125504.049,A,5542.2389,N,03741.600.0,M,,0000*5D\r\n"
+                      "$GPRMC,125504.049,A,5542.63,E,0.06,25.82,200906,,,*17";
 
     Parsing p;
     bool isParsed = p.parseData(str);
@@ -168,9 +171,9 @@ void newtestclass::testParseData_northernLatitude() {
 
     double expected = 55.70398; // 5542.2389
     double actual = p.getLatitude();
-    double delta = expected/1000;
-    
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    double delta = expected / 1000;
+
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isParsed);
 }
@@ -197,9 +200,9 @@ void newtestclass::testParseData_southernLatitude() {
 
     double expected = -55.70398;
     double actual = p.getLatitude();
-    double delta = expected/1000;
-    
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    double delta = expected / 1000;
+
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isParsed);
 }
@@ -226,7 +229,7 @@ void newtestclass::testParseData_easternLongitude() {
     int actual = p.getLongitude();
     double delta = 0.00001;
 
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isParsed);
 }
@@ -251,9 +254,9 @@ void newtestclass::testParseData_westernLongitude() {
 
     int expected = -37.693438;
     int actual = p.getLongitude();
-    double delta = expected/1000;
+    double delta = expected / 1000;
 
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isParsed);
 }
@@ -272,7 +275,7 @@ void newtestclass::testParseData_altitude() {
     // 3) Latitude
     // 5) Longitude
     // 7) Speed over ground, knots
-    
+
     std::string str = "$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,,0000*5D\r\n$GPRMC,125504.049,A,5542.2389,N,03741.6063,E,0.06,25.82,200906,,,*17";
     Parsing p;
     bool isParsed = p.parseData(str);
@@ -281,7 +284,7 @@ void newtestclass::testParseData_altitude() {
     double actual = p.getAltitude();
     double delta = 0.1;
 
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isParsed);
 }
@@ -306,7 +309,7 @@ void newtestclass::testParseData_time() {
 
     int expected = 125504;
     int actual = p.getTime();
-    
+
     bool isEqual = (expected == actual);
 
     CPPUNIT_ASSERT(isEqual && isParsed);
@@ -334,7 +337,7 @@ void newtestclass::testParseData_speed() {
     double actual = p.getSpeed();
     double delta = 0.00001;
 
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isParsed);
 }
@@ -348,7 +351,7 @@ void newtestclass::testMinutesToDegrees_5532_82() {
     Parsing p;
     bool isOk = p.minutesToDegrees(inputVal, actual);
 
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isOk);
 }
@@ -356,13 +359,13 @@ void newtestclass::testMinutesToDegrees_5532_82() {
 void newtestclass::testMinutesToDegrees_5542_2389() {
     double actual;
     double expected = 55.70398;
-    double delta = expected/1000;
+    double delta = expected / 1000;
     double inputVal = 5542.2389;
 
     Parsing p;
     bool isOk = p.minutesToDegrees(inputVal, actual);
 
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isOk);
 }
@@ -370,13 +373,13 @@ void newtestclass::testMinutesToDegrees_5542_2389() {
 void newtestclass::testMinutesToDegrees_03741_6063() {
     double actual;
     double expected = 37.693438;
-    double delta = expected/1000;
+    double delta = expected / 1000;
     double inputVal = 03741.6063;
 
     Parsing p;
     bool isOk = p.minutesToDegrees(inputVal, actual);
 
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual && isOk);
 }
@@ -402,7 +405,6 @@ void newtestclass::testMinutesToDegrees_notEqual_0374_16063() {
 //    CPPUNIT_ASSERT_EQUAL(expected, actual);
 //}
 
-
 void newtestclass::testUtcToUnixTime_065504() {
     double expected = 1348124104;
     double utcTime = 065504.049;
@@ -410,9 +412,87 @@ void newtestclass::testUtcToUnixTime_065504() {
 
     Parsing p;
     double actual = p.utcToUnixTime(utcTime, utcData);
-    double delta = expected/1000;
-    
-    bool isEqual = (std::abs(expected-actual) <= std::abs(delta));
+    double delta = expected / 1000;
+
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
 
     CPPUNIT_ASSERT(isEqual);
+}
+
+void newtestclass::testParseData_partialBuffer() {
+    std::vector<string> qStrings;
+
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+    qStrings.push_back("$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,");
+    qStrings.push_back(",0000*5D\r\n$GPRMC,125504.049,A,");
+    qStrings.push_back("5542.2389,N,03741.6063,E,0.06,");
+    qStrings.push_back("25.82,200906,,,*17\r\n");
+
+    std::string s;
+    for (unsigned int i = 0; i < 48; i++) {
+        s += qStrings[i];
+    }
+    
+    int n = s.length();
+    
+    Parsing p;
+    bool isParsed = true;
+
+    unsigned int i = 0;
+    while (i < 32) {
+        isParsed = p.parseData(qStrings[i++]);
+    }
+
+    double expected = 55.70398; // 5542.2389
+    double actual = p.getLatitude();
+    double delta = expected / 1000;
+
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
+
+    CPPUNIT_ASSERT(isEqual && isParsed);
 }

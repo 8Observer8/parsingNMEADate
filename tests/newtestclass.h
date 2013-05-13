@@ -33,8 +33,9 @@ class newtestclass : public CPPUNIT_NS::TestFixture {
 
     CPPUNIT_TEST(testMinutesToDegrees_notEqual_0374_16063);
 
-    //CPPUNIT_TEST(testUtcToUnixTime_125504);
     CPPUNIT_TEST(testUtcToUnixTime_065504);
+
+    CPPUNIT_TEST(testParseData_partialBuffer);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -67,7 +68,8 @@ private:
     
     //void testUtcToUnixTime_125504();
     void testUtcToUnixTime_065504();
+
+    void testParseData_partialBuffer();
 };
 
 #endif	/* NEWTESTCLASS_H */
-
