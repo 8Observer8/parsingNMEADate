@@ -628,39 +628,39 @@ void newtestclass::testParseData_partialBuffer_Latitude_twoPackage() {
     // 5) Longitude
     // 7) Speed over ground, knots
 
-//    std::vector<string> buffer;
-//    std::string strPart00 = ",0000*5D\r\n";
-//    std::string strPart01 = "$GPGGA,072143.923,,";
-//    std::string strPart02 = ",,,2,03,";
-//    std::string strPart03 = ",9.5,M,0.0,M,";
-//    std::string strPart04 = ",0000*5D\r\n$GPRMC,";
-//    std::string strPart05 = "125504.049,A,5542.2389,S,03741.6063,E,0.06,25.82,200906,,,*17\r\n";
-//    std::string strPart06 = "$GPGGA,072143.923,";
-//    buffer.push_back(strPart00);
-//    buffer.push_back(strPart01);
-//    buffer.push_back(strPart02);
-//    buffer.push_back(strPart03);
-//    buffer.push_back(strPart04);
-//    buffer.push_back(strPart05);
-//    buffer.push_back(strPart06);
-//
-//    Parsing p;
-//    bool isParsed;
-//    for (unsigned int i = 0; i < 5; i++) {
-//        isParsed = p.parseData(buffer[i]);
-//        CPPUNIT_ASSERT(isParsed);
-//    }
-//
-//    isParsed = p.parseData(buffer[6]);
-//    CPPUNIT_ASSERT(!isParsed);
-//
-//    double expected = -55.70398;
-//    double actual = p.getLatitude();
-//    double delta = expected / 1000;
-//
-//    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
-//
-//    CPPUNIT_ASSERT(isEqual && isParsed);
+    std::vector<string> buffer;
+    std::string strPart00 = ",0000*5D\r\n";
+    std::string strPart01 = "$GPGGA,072143.923,,";
+    std::string strPart02 = ",,,2,03,";
+    std::string strPart03 = ",9.5,M,0.0,M,";
+    std::string strPart04 = ",0000*5D\r\n$GPRMC,";
+    std::string strPart05 = "125504.049,A,5542.2389,S,03741.6063,E,0.06,25.82,200906,,,*17\r\n";
+    std::string strPart06 = "$GPGGA,072143.923,";
+    buffer.push_back(strPart00);
+    buffer.push_back(strPart01);
+    buffer.push_back(strPart02);
+    buffer.push_back(strPart03);
+    buffer.push_back(strPart04);
+    buffer.push_back(strPart05);
+    buffer.push_back(strPart06);
+
+    Parsing p;
+    bool isParsed;
+    for (unsigned int i = 0; i < 5; i++) {
+        isParsed = p.parseData(buffer[i]);
+        CPPUNIT_ASSERT(isParsed);
+    }
+
+    isParsed = p.parseData(buffer[6]);
+    CPPUNIT_ASSERT(!isParsed);
+
+    double expected = -55.70398;
+    double actual = p.getLatitude();
+    double delta = expected / 1000;
+
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
+
+    CPPUNIT_ASSERT(isEqual && isParsed);
 }
 
 void newtestclass::testParseData_partialBuffer_Longitude_twoPackage() {
@@ -677,82 +677,38 @@ void newtestclass::testParseData_partialBuffer_Longitude_twoPackage() {
     // 3) Latitude
     // 5) Longitude
     // 7) Speed over ground, knots
-//    std::vector<string> buffer;
-//    std::string strPart00 = ",0000*5D\r\n";
-//    std::string strPart01 = "$GPGGA,072143.923,,";
-//    std::string strPart02 = ",,,2,03,";
-//    std::string strPart03 = ",9.5,M,0.0,M,";
-//    std::string strPart04 = ",0000*5D\r\n$GPRMC,";
-//    std::string strPart05 = "125504.049,A,5542.2389,S,03741.6063,E,0.06,25.82,200906,,,*17\r\n";
-//    std::string strPart06 = "$GPGGA,072143.923,";
-//    buffer.push_back(strPart00);
-//    buffer.push_back(strPart01);
-//    buffer.push_back(strPart02);
-//    buffer.push_back(strPart03);
-//    buffer.push_back(strPart04);
-//    buffer.push_back(strPart05);
-//    buffer.push_back(strPart06);
-//
-//    Parsing p;
-//    bool isParsed;
-//    for (unsigned int i = 0; i < 5; i++) {
-//        isParsed = p.parseData(buffer[i]);
-//        CPPUNIT_ASSERT(isParsed);
-//    }
-//
-//    isParsed = p.parseData(buffer[6]);
-//    CPPUNIT_ASSERT(!isParsed);
-//
-//    int expected = -37.693438;
-//    int actual = p.getLongitude();
-//    double delta = expected / 1000;
-//
-//    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
-//
-//    CPPUNIT_ASSERT(isEqual && isParsed);
-}
+    std::vector<string> buffer;
+    std::string strPart00 = ",0000*5D\r\n";
+    std::string strPart01 = "$GPGGA,072143.923,,";
+    std::string strPart02 = ",,,2,03,";
+    std::string strPart03 = ",9.5,M,0.0,M,";
+    std::string strPart04 = ",0000*5D\r\n$GPRMC,";
+    std::string strPart05 = "125504.049,A,5542.2389,S,03741.6063,E,0.06,25.82,200906,,,*17\r\n";
+    std::string strPart06 = "$GPGGA,072143.923,";
+    buffer.push_back(strPart00);
+    buffer.push_back(strPart01);
+    buffer.push_back(strPart02);
+    buffer.push_back(strPart03);
+    buffer.push_back(strPart04);
+    buffer.push_back(strPart05);
+    buffer.push_back(strPart06);
 
-void newtestclass::testIsBufferFull_BufferIsFull() {
-    // GPGGA
-    // 6) GPS Quality Indicator,
-    //    0 - fix not available,
-    //    1 - GPS fix,
-    //    2 - Differential GPS fix
-    // 7) Number of satellites in view, 00 - 12
-    // 9) Antenna Altitude above/below mean-sea-level (geoid)
-    // GPRMC
-    // 1) Time (UTC)
-    // 2) Status, V = Navigation receiver warning
-    // 3) Latitude
-    // 5) Longitude
-    // 7) Speed over ground, knots
-//    Parsing p;
-//    std::string buffer = "$GPRMC,125504.049,\r\n$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,,0000*5D\r\n$GPRMC,125504.049,V,5542.2389,N,03741.6063,E,0.06,25.82,200906,,,*17\r\n$GPGGA,072143.923,";
-//    CPPUNIT_ASSERT(p.isBufferFull(buffer));
-//
-//    bool isParsed = p.parseData(buffer);
-//
-//    int expected = 37.693438; // 3741.6063
-//    int actual = p.getLongitude();
-//    double delta = 0.00001;
-//
-//    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
-//
-//    CPPUNIT_ASSERT(isEqual && isParsed);
-}
+    Parsing p;
+    bool isParsed;
+    bool dataIsReady = false;
+    for (unsigned int i = 0; i < 5; i++) {
+        isParsed = p.parseData(buffer[i], dataIsReady);
+        CPPUNIT_ASSERT(!isParsed && !dataIsReady);
+    }
 
-void newtestclass::testIsBufferFull_BufferIsNotFull() {
-//    Parsing p;
-//    std::string buffer = "$GPGGA,072143.923,,,,,2,03,,9.5,M,0.0,M,,0000*5D\r\n$GPRMC,125504.049,V,5542.2389,N,03741.6063,E,0.06,25.82,200906,,,";
-//    CPPUNIT_ASSERT(!p.isBufferFull(buffer));
-//
-//    bool isParsed = p.parseData(buffer);
-//
-//    int expected = 37.693438; // 3741.6063
-//    int actual = p.getLongitude();
-//    double delta = 0.00001;
-//
-//    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
-//
-//    CPPUNIT_ASSERT(isEqual && isParsed);
+    isParsed = p.parseData(buffer[6]);
+    CPPUNIT_ASSERT(isParsed);
+
+    int expected = -37.693438;
+    int actual = p.getLongitude();
+    double delta = expected / 1000;
+
+    bool isEqual = (std::abs(expected - actual) <= std::abs(delta));
+
+    CPPUNIT_ASSERT(isEqual && isParsed);
 }

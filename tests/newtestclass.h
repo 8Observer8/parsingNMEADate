@@ -43,9 +43,6 @@ class newtestclass : public CPPUNIT_NS::TestFixture {
 
     CPPUNIT_TEST(testParseData_partialBuffer_Latitude_twoPackage);
     CPPUNIT_TEST(testParseData_partialBuffer_Longitude_twoPackage);
-
-    CPPUNIT_TEST(testIsBufferFull_BufferIsFull);
-    CPPUNIT_TEST(testIsBufferFull_BufferIsNotFull);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -87,9 +84,6 @@ private:
 
     void testParseData_partialBuffer_Latitude_twoPackage();
     void testParseData_partialBuffer_Longitude_twoPackage();
-
-    void testIsBufferFull_BufferIsFull();
-    void testIsBufferFull_BufferIsNotFull();
 };
 
 #endif	/* NEWTESTCLASS_H */
