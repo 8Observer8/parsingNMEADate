@@ -35,7 +35,17 @@ class newtestclass : public CPPUNIT_NS::TestFixture {
 
     CPPUNIT_TEST(testUtcToUnixTime_065504);
 
-    CPPUNIT_TEST(testParseData_partialBuffer);
+    CPPUNIT_TEST(testParseData_partialBuffer_Latitude);
+    CPPUNIT_TEST(testParseData_partialBuffer_Longitude);
+
+    CPPUNIT_TEST(testParseData_partialBuffer_Latitude_BufferIsNotFull);
+    CPPUNIT_TEST(testParseData_partialBuffer_Longitude_BufferIsNotFull);
+
+    CPPUNIT_TEST(testParseData_partialBuffer_Latitude_twoPackage);
+    CPPUNIT_TEST(testParseData_partialBuffer_Longitude_twoPackage);
+
+    CPPUNIT_TEST(testIsBufferFull_BufferIsFull);
+    CPPUNIT_TEST(testIsBufferFull_BufferIsNotFull);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -69,7 +79,17 @@ private:
     //void testUtcToUnixTime_125504();
     void testUtcToUnixTime_065504();
 
-    void testParseData_partialBuffer();
+    void testParseData_partialBuffer_Latitude();
+    void testParseData_partialBuffer_Longitude();
+
+    void testParseData_partialBuffer_Latitude_BufferIsNotFull();
+    void testParseData_partialBuffer_Longitude_BufferIsNotFull();
+
+    void testParseData_partialBuffer_Latitude_twoPackage();
+    void testParseData_partialBuffer_Longitude_twoPackage();
+
+    void testIsBufferFull_BufferIsFull();
+    void testIsBufferFull_BufferIsNotFull();
 };
 
 #endif	/* NEWTESTCLASS_H */

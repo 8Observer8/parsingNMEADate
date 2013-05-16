@@ -32,9 +32,10 @@ public:
      * Parses the data from the NMEA protocol
      * 
      * @param buffer The buffer for parsing
+     * @param dataIsRaedy Data is ready
      * @return The analysis occurred or not
      */
-    bool parseData(std::string buffer);
+    bool parseData(std::string buffer, bool& dataIsReady);
 
     /**
      * Splits this string
@@ -123,26 +124,35 @@ public:
      */
     unsigned int utcToUnixTime(double utcTime, int utcData);
 
+    /**
+     * Checks "is a buffer full"
+     * 
+     * @param buffer The buffer
+     * @return The buffer is full
+     */
+    bool isBufferFull(const std::string& buffer);
+
 private:
+    /** GPGGA is ready */
+    bool GPGGA_IsReady;
+
+    /** GPRMC is ready */
+    bool GPRMC_IsReady;
+    
+    /** The fields */
+    vector<string> fields;
+
+    /** The GPGGA */
+    vector<string> strGPGGA;
+
+    /** The GPRMC */
+    vector<string> strGPRMC;
+
     /**
      * Sets the values in zero
      */
     void setValuesInZero();
 
-    /**
-     * Check "is the buffer valid?"
-     * @param s The input string
-     * @return Where or not the buffer is valid
-     */
-    bool isTheBufferValid(std::string& s);
-
-    /**
-     * Check "is the buffer completed?"
-     * @param s The input string
-     * @return Where or not the buffer is completed
-     */
-    bool isTheBufferComleted(std::string& s);
-    
     /**
      * The latitude
      */

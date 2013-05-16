@@ -72,29 +72,14 @@ void printInFile(const vector<string>& s) {
     myfile.close();
 }
 
-bool Parsing::parseData(std::string s) {
-    if (s.empty()) {
+bool Parsing::parseData(std::string buffer, bool& dataIsReady) {
+    dataIsReady = false;
+
+    if (buffer.empty()) {
         setValuesInZero();
+        dataIsReady = false;
         return false;
     }
-
-    static std::string staticBuffer;
-    std::string buffer = "";
-
-    staticBuffer += s;
-
-    if (staticBuffer.length() < 1000) {
-        setValuesInZero();
-        return false;
-    }
-    else {
-        buffer = staticBuffer;
-        staticBuffer = "";
-    }
-
-    vector<string> fields;
-    vector<string>::iterator itGPGGA;
-    vector<string> strGPGGA;
 
     // Raplace '\n' to ','
     for (unsigned int i = 0; i < buffer.size(); ++i) {
@@ -103,24 +88,78 @@ bool Parsing::parseData(std::string s) {
         }
     }
 
-    split(fields, buffer, ",");
-    
-    // Take GGA data in array
-    itGPGGA = find(fields.begin(), fields.end(), "$GPGGA");
-    if (itGPGGA != fields.end()) {
-        for (unsigned int i = 0; i < 15; ++i) {
-            if (itGPGGA != fields.end()) {
-                strGPGGA.push_back(*itGPGGA);
-                ++itGPGGA;
-            } else {
-                setValuesInZero();
-                return false;
-            }
-        }
-    } else {
+    vector<string> tempFields;
+
+    // Splites data
+    split(tempFields, buffer, ",");
+
+    if (tempFields.empty()) {
         setValuesInZero();
+        dataIsReady = false;
         return false;
     }
+
+    for (vector<string>::iterator it = tempFields.begin();
+            it != tempFields.end(); it++) {
+        fields.push_back(*it);
+    }
+
+    /** Iterator for GPGGA field */
+    vector<string>::iterator itGPGGA;
+
+    if (!GPGGA_IsReady) {
+        // Take GGA data in array
+        itGPGGA = find(fields.begin(), fields.end(), "$GPGGA");
+        if (itGPGGA != fields.end()) {
+            for (unsigned int i = 0; i < 15; ++i) {
+                if (itGPGGA != fields.end()) {
+                    strGPGGA.push_back(*itGPGGA);
+                    ++itGPGGA;
+                } else {
+                    dataIsReady = false;
+                    return true;
+                }
+            }
+        } else if (!strGPGGA.empty() || !strGPRMC.empty()) {
+            dataIsReady = false;
+            return true;
+        } else {
+            setValuesInZero();
+            dataIsReady = false;
+            return false;
+        }
+    }
+
+    GPGGA_IsReady = true;
+
+    // Take the GPRMC packet
+    
+    /** Iterator for GPRMC field */
+    vector<string>::iterator itGPRMC;
+
+    if (!GPRMC_IsReady) {
+        itGPRMC = find(fields.begin(), fields.end(), "$GPRMC");
+        if (itGPRMC != fields.end()) {
+            for (unsigned int i = 0; i < 12; ++i) {
+                if (itGPRMC != fields.end()) {
+                    strGPRMC.push_back(*itGPRMC);
+                    ++itGPRMC;
+                } else {
+                    dataIsReady = false;
+                    return true;
+                }
+            }
+        } else if (!strGPGGA.empty() || !strGPRMC.empty()) {
+            dataIsReady = false;
+            return true;
+        } else {
+            setValuesInZero();
+            dataIsReady = false;
+            return false;
+        }
+    }
+
+    GPRMC_IsReady = true;
 
     // 6) GPS Quality Indicator,
     // 0 - fix not available,
@@ -146,27 +185,6 @@ bool Parsing::parseData(std::string s) {
         setValuesInZero();
         return false;
     }
-
-    // Take the GPRMC packet
-    vector<string>::iterator itGPRMC;
-    vector<string> strGPRMC;
-    itGPRMC = find(fields.begin(), fields.end(), "$GPRMC");
-    if (itGPRMC != fields.end()) {
-        for (unsigned int i = 0; i < 12; ++i) {
-            if (itGPRMC != fields.end()) {
-                strGPRMC.push_back(*itGPRMC);
-                ++itGPRMC;
-            } else {
-                setValuesInZero();
-                return false;
-            }
-        }
-    } else {
-        setValuesInZero();
-        return false;
-    }
-    //    print(fields);
-    //    printInFile(fields);
 
     // 2) Status, V = Navigation receiver warning
     if (strGPRMC[2] != "A") {
@@ -225,7 +243,7 @@ bool Parsing::parseData(std::string s) {
     }
     m_dSpeed *= 1.852;
 
-    staticBuffer = "";
+    dataIsReady = true;
     return true;
 }
 
@@ -270,6 +288,11 @@ void Parsing::setValuesInZero() {
     m_nSatellites = 0;
     m_isFixGPGGA = false;
     m_isFixGPRMC = false;
+    GPGGA_IsReady = false;
+    GPRMC_IsReady = false;
+    fields.clear();
+    strGPGGA.clear();
+    strGPRMC.clear();
 }
 
 bool Parsing::minutesToDegrees(double dDegreeWithMinutes, double& degrees) {
@@ -308,25 +331,36 @@ unsigned int Parsing::utcToUnixTime(double dUtcTime, int utcData) {
     stringstream qUtcTimeToString;
     qUtcTimeToString << iUtcTime;
     string qUtcTimeAsString(qUtcTimeToString.str());
-    
-//    int hourAsString = qUtcTimeAsString(0, 2);
-//    int minuteAsString = qUtcTimeAsString(2, 2);
-//    int secondAsString = qUtcTimeAsString(4, 2);
-//    
-//    // Conversion from double to string
-//    stringstream qUtcDataToString;
-//    qUtcDataToString << utcData;
-//    string qUtcDataAsString(qUtcDataToString.str());
-//    
-//    int dayAsString = qUtcDataAsString(0, 2);
-//    int monthAsString = qUtcDataAsString(2, 2);
-//    int yearAsString = qUtcDataAsString(4, 2);
-//
-//    struct tm beginningOfUnix;
-//    beginningOfUnix.tm_hour = 0;
-//    beginningOfUnix.tm_min = 0;
-//    beginningOfUnix.tm_sec = 0;
-//    beginningOfUnix.tm_mon = 0;
-//    beginningOfUnix.tm_mday = 1;
+
+    //    int hourAsString = qUtcTimeAsString(0, 2);
+    //    int minuteAsString = qUtcTimeAsString(2, 2);
+    //    int secondAsString = qUtcTimeAsString(4, 2);
+    //    
+    //    // Conversion from double to string
+    //    stringstream qUtcDataToString;
+    //    qUtcDataToString << utcData;
+    //    string qUtcDataAsString(qUtcDataToString.str());
+    //    
+    //    int dayAsString = qUtcDataAsString(0, 2);
+    //    int monthAsString = qUtcDataAsString(2, 2);
+    //    int yearAsString = qUtcDataAsString(4, 2);
+    //
+    //    struct tm beginningOfUnix;
+    //    beginningOfUnix.tm_hour = 0;
+    //    beginningOfUnix.tm_min = 0;
+    //    beginningOfUnix.tm_sec = 0;
+    //    beginningOfUnix.tm_mon = 0;
+    //    beginningOfUnix.tm_mday = 1;
     return 0;
+}
+
+bool Parsing::isBufferFull(const std::string& buffer) {
+    std::string beginingOfGPRMC = "$GPRMC";
+
+    std::size_t found = buffer.find(beginingOfGPRMC);
+    if (found == std::string::npos) {
+        return false;
+    }
+
+
 }
